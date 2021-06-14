@@ -24,24 +24,22 @@ export default class App extends React.Component {
     this.toggleStarItem = this.toggleStarItem.bind(this);
   }
 
-  toggleLikeItem(id) {
+  toggleItem(id, itemName) {
     this.setState(({ data }) => {
       const updatedData = data.map(item => {
         if (item.id !== id) return item;
-        return { ...item, liked: !item.liked };
+        return { ...item, [itemName]: !item[itemName] };
       })
       return { data: updatedData };
     })
   }
+  
+  toggleLikeItem(id) {
+    this.toggleItem(id, 'liked');
+  }
 
   toggleStarItem(id) {
-    this.setState(({ data }) => {
-      const updatedData = data.map(item => {
-        if (item.id !== id) return item;
-        return { ...item, starred: !item.starred };
-      })
-      return { data: updatedData };
-    })
+    this.toggleItem(id, 'starred');
   }
   
   deleteItem(id) {
