@@ -17,11 +17,14 @@ export default class App extends React.Component {
         {text: 'Lorem ipsum dolor sit amet.', starred: false, liked: true, id: 32},
         {text: 'Lorem ipsum dolor sit amet consectetur.', starred: false, liked: false, id: 12},
       ],
+      searchText: '',
     }
     this.deleteItem = this.deleteItem.bind(this);
     this.addItem = this.addItem.bind(this);
     this.toggleLikeItem = this.toggleLikeItem.bind(this);
     this.toggleStarItem = this.toggleStarItem.bind(this);
+    this.onChangeSearch = this.onChangeSearch.bind(this);
+    this.searchPosts = this.searchPosts.bind(this);
   }
 
   toggleItem(id, itemName) {
@@ -54,19 +57,29 @@ export default class App extends React.Component {
       return { data: [...data, newItem] };
     });
   }
-  
+
+  onChangeSearch(event) {
+    this.setState({ searchText: event.target.value });
+  }
+
+  searchPosts() {
+    const { searchText, data } = this.state;
+    if (searchText === '') return data;
+    return data.filter((item) => item.text.includes(searchText));
+  }
+
   render() {
-    const { data } = this.state;
+    const visiblePosts = this.searchPosts();
 
     return (
       <div className="app">
         <Header userName={this.state.userName} data={this.state.data}/>
         <div className="search-pandel d-flex">
-          <SearchPanel/>
+          <SearchPanel onChange={this.onChangeSearch}/>
           <PostStatusFilter/>
         </div>
         <PostList 
-          data={data} 
+          data={visiblePosts}
           onClickTrash={this.deleteItem}
           toggleStarItem={this.toggleStarItem}
           toggleLikeItem={this.toggleLikeItem}/>
