@@ -2,11 +2,11 @@ import { Button } from 'reactstrap';
 import './filter.css';
 
 
-const PostStatusFilter = () => {
+const PostStatusFilter = ({changeCategory}) => {
   return (
     <div className="btn-group">
-      <Button color="primary">All</Button>
-      <Button outline color="secondary">Liked</Button>
+      <Button onClick={() => { changeCategory('all') }} color="primary">All</Button>
+      <Button onClick={() => { changeCategory('liked') }} outline color="secondary">Liked</Button>
     </div>
   )
 }

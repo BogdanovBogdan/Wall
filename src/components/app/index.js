@@ -18,6 +18,7 @@ export default class App extends React.Component {
         {text: 'Lorem ipsum dolor sit amet consectetur.', starred: false, liked: false, id: 12},
       ],
       searchText: '',
+      activeCategory: 'all',
     }
     this.deleteItem = this.deleteItem.bind(this);
     this.addItem = this.addItem.bind(this);
@@ -25,6 +26,8 @@ export default class App extends React.Component {
     this.toggleStarItem = this.toggleStarItem.bind(this);
     this.onChangeSearch = this.onChangeSearch.bind(this);
     this.searchPosts = this.searchPosts.bind(this);
+    this.onChangeCategory = this.onChangeCategory.bind(this);
+    this.filterPosts = this.filterPosts.bind(this);
   }
 
   toggleItem(id, itemName) {
@@ -68,18 +71,29 @@ export default class App extends React.Component {
     return data.filter((item) => item.text.includes(searchText));
   }
 
+  onChangeCategory(category) {
+    this.setState({ activeCategory: category });
+  }
+
+  filterPosts(visiblePosts) {
+    const { activeCategory } = this.state;
+    if (activeCategory === 'all') return visiblePosts;
+    return visiblePosts.filter((item) => item[activeCategory]);
+  }
+
   render() {
     const visiblePosts = this.searchPosts();
+    const filteredPosts = this.filterPosts(visiblePosts);
 
     return (
       <div className="app">
         <Header userName={this.state.userName} data={this.state.data}/>
         <div className="search-pandel d-flex">
           <SearchPanel onChange={this.onChangeSearch}/>
-          <PostStatusFilter/>
+          <PostStatusFilter changeCategory={this.onChangeCategory}/>
         </div>
         <PostList 
-          data={visiblePosts}
+          data={filteredPosts}
           onClickTrash={this.deleteItem}
           toggleStarItem={this.toggleStarItem}
           toggleLikeItem={this.toggleLikeItem}/>
