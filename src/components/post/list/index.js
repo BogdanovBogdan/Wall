@@ -13,7 +13,7 @@ const PostList = ({data, onClickTrash, toggleStarItem, toggleLikeItem}) => {
       onClickLike={() => { toggleLikeItem(id) }}
     />
   })
-  
+
   return (
     <ul className="app-list list-group">
       {items}

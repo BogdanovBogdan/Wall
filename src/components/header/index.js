@@ -13,7 +13,6 @@ export default class Header extends React.Component {
   
   render() {
     const { userName, data } = this.props;
-    console.log({ userName, data });
     return (
       <div className="app-header d-flex">
         <h1>{userName}</h1>
