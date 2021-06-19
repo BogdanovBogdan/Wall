@@ -22,8 +22,7 @@ export default class App extends React.Component {
     }
     this.deleteItem = this.deleteItem.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.toggleLikeItem = this.toggleLikeItem.bind(this);
-    this.toggleStarItem = this.toggleStarItem.bind(this);
+    this.toggleItem = this.toggleItem.bind(this);
     this.onChangeSearch = this.onChangeSearch.bind(this);
     this.searchPosts = this.searchPosts.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
@@ -38,14 +37,6 @@ export default class App extends React.Component {
       })
       return { data: updatedData };
     })
-  }
-  
-  toggleLikeItem(id) {
-    this.toggleItem(id, 'liked');
-  }
-
-  toggleStarItem(id) {
-    this.toggleItem(id, 'starred');
   }
   
   deleteItem(id) {
@@ -98,8 +89,8 @@ export default class App extends React.Component {
         <PostList 
           data={filteredPosts}
           onClickTrash={this.deleteItem}
-          toggleStarItem={this.toggleStarItem}
-          toggleLikeItem={this.toggleLikeItem}/>
+          toggleStarItem={(id) => this.toggleItem(id, 'starred')}
+          toggleLikeItem={(id) => this.toggleItem(id, 'liked')}/>
         <PostForm addItem={this.addItem}/>
       </div>
     )
