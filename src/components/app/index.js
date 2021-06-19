@@ -90,7 +90,10 @@ export default class App extends React.Component {
         <Header userName={this.state.userName} data={this.state.data}/>
         <div className="search-pandel d-flex">
           <SearchPanel onChange={this.onChangeSearch}/>
-          <PostStatusFilter changeCategory={this.onChangeCategory}/>
+          <PostStatusFilter 
+            activeCategory={this.state.activeCategory}
+            changeCategory={this.onChangeCategory}
+          />
         </div>
         <PostList 
           data={filteredPosts}
